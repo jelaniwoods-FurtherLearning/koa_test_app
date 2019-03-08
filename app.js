@@ -21,6 +21,8 @@ app.use(bodyParser());
 // There's an extra module koa-json
 // app.use(async ctx => ctx.body = "Hello World");
 
+app.context.user = "Jelani"
+
 render(app, {
   root: path.join(__dirname, "views"),
   layout: "layout",
@@ -54,7 +56,7 @@ async function add(ctx) {
 }
 
 
-router.get("/test", ctx => (ctx.body = "Hello World"));
+router.get("/test", ctx => (ctx.body = `Hello ${ctx.user}`));
 
 // Router Middleware
 app.use(router.routes()).use(router.allowedMethods());
