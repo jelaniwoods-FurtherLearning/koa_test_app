@@ -3,6 +3,7 @@ const KoaRouter = require('koa-router');
 const json = require('koa-json');
 const path = require('path');
 const render = require('koa-ejs');
+const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -12,6 +13,9 @@ const things = ["My Family", "Programming", "Music"]
 
 // JSON Pretty Middleware
 app.use(json());
+
+// Body parser
+app.use(bodyParser());
 // easy api service
 // app.use(async ctx => ctx.body = {msg: "Hello World"});
 // There's an extra module koa-json
@@ -28,6 +32,7 @@ render(app, {
 // Routes
 router.get("/", index);
 router.get("/add", showAdd);
+router.post("/add", add);
 
 
 // List of things
@@ -40,6 +45,12 @@ async function index(ctx) {
 // Show add page
 async function showAdd(ctx) {
   await ctx.render("add");
+}
+// post to add page
+async function add(ctx) {
+  const body = ctx.request.body;
+  things.push(body.thing);
+  ctx.redirect("/");
 }
 
 
