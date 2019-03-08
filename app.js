@@ -25,10 +25,18 @@ render(app, {
   debug: false
 })
 
-// index
-router.get("/", async ctx => {
-  await ctx.render("index", {title: "Things I Love", things: things});
-});
+// Routes
+router.get("/", index);
+
+
+// List of things
+async function index(ctx) {
+  await ctx.render("index", {
+    title: "Things I Love",
+    things: things
+  });
+}
+
 
 router.get("/test", ctx => (ctx.body = "Hello World"));
 
